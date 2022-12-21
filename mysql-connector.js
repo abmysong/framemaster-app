@@ -18,7 +18,9 @@ db.error = function (req, res, error) {
   console.error(error.sql)
   console.error('End: SQL error')
   // error.sql = undefined
-  res.status(500).send(error)
+  res.status(500).send({
+    message: error
+  })
   return false
 }
 

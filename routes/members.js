@@ -1,6 +1,7 @@
 const express = require('express')
 const router = express.Router()
 const db = global.db
+const jwtAuth = require('../middlewares/jwtAuth.js')
 
 router.post('/login', function(req, res) {
   const sql = `
@@ -15,7 +16,10 @@ router.post('/login', function(req, res) {
         message: 'ID 또는 PASSWORD를 확인하세요.'
       })
     } else {
-      res.send('성공')
+      jwtAuth.tokenCreate(req, res, {
+        member_pk: rows[0].member_pk,
+        id: rows[0].id
+      })
     }
   })
 })
